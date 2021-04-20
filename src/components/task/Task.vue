@@ -5,7 +5,7 @@
 				:isDone="task.isDone"
 				@click.left="toggleDoneFlag(task.title)"
 			/>
-			<span>{{ task.title }}</span>
+			<span :class="getTextClasses">{{ task.title }}</span>
 			<task-important-button
 				:isImportant="task.isImportant"
 				@click.left="toggleImportantFlag(task.title)"
@@ -29,6 +29,11 @@ export default {
 		},
 	},
 	inject: ["toggleImportantFlag", "toggleDoneFlag"],
+	computed: {
+		getTextClasses() {
+			return this.task.isDone? {'strike-text': true}: {};
+		}
+	}
 };
 </script>
 
@@ -50,5 +55,8 @@ export default {
 }
 .task-action:hover {
 	cursor: pointer;
+}
+.strike-text {
+	text-decoration: line-through;
 }
 </style>
