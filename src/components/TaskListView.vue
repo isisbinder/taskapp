@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import DoneTasksList from './DoneTasksList.vue';
-import OpenTasksList from "./OpenTasksList.vue";
+import DoneTasksList from './list/DoneTasksList.vue';
+import OpenTasksList from "./list/OpenTasksList.vue";
 import TaskInput from "./TaskInput.vue";
 
 function sorterTaskArray(a, b) {

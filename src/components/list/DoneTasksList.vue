@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Task from './task/Task.vue';
+import Task from '../task/Task.vue';
 export default {
 	components: {
 		Task,
