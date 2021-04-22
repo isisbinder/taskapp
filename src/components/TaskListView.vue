@@ -1,22 +1,28 @@
 <template>
-	<div class="container list-view-container">
-		<div class="fixed-list-view pt-3">
-			<open-tasks-list></open-tasks-list>
-			<done-tasks-list></done-tasks-list>
+	<div class="container-fluid tasklist-view row p-0 m-0">
+		<div class="col px-0 left-side">
+			<side-menu></side-menu>
 		</div>
-		<task-input class="fixed-input-view my-4"></task-input>
+		<div class="col pt-3 right-side">
+			<div class="tasklist-container col-lg-9 col-md-9">
+				<open-tasks-list></open-tasks-list>
+				<done-tasks-list></done-tasks-list>
+			</div>
+			<task-input class="mt-4" style="place-content: center"></task-input>
+		</div>
 	</div>
 </template>
 
 <script>
-import DoneTasksList from './list/DoneTasksList.vue';
+import SideMenu from './mainmenu/SideMenu.vue';
+import DoneTasksList from "./list/DoneTasksList.vue";
 import OpenTasksList from "./list/OpenTasksList.vue";
 import TaskInput from "./TaskInput.vue";
 
 function sorterTaskArray(a, b) {
-	if (a['isImportant'] && b['isImportant']) {
+	if (a["isImportant"] && b["isImportant"]) {
 		return 0;
-	} else if (a['isImportant'] && !b['isImportant']) {
+	} else if (a["isImportant"] && !b["isImportant"]) {
 		return -1;
 	}
 	return 1;
@@ -24,12 +30,15 @@ function sorterTaskArray(a, b) {
 
 export default {
 	components: {
+		SideMenu,
 		OpenTasksList,
 		DoneTasksList,
 		TaskInput,
 	},
 	provide() {
 		return {
+			allLists: this.tasklists,
+			createList: this.createList,
 			allTasks: this.tasks,
 			toggleImportantFlag: this.toggleImportantFlag,
 			toggleDoneFlag: this.toggleDoneFlag,
@@ -38,15 +47,26 @@ export default {
 	},
 	data() {
 		return {
-			taskRepo: [	],
+			taskListsRepo: [{ taskListName: "Tarefas", tasks: [] }],
+			taskRepo: [],
 		};
 	},
 	computed: {
 		tasks() {
 			return this.taskRepo;
+		},
+		tasklists() {
+			return this.taskListsRepo;
 		}
 	},
 	methods: {
+		createList(event) {
+			console.log('creating new list');
+			let name = event.target.value.trim();
+			let tasklistTemplate = { taskListName: undefined || name, tasks: [] };
+			this.taskListsRepo.push(tasklistTemplate);
+			event.target.value = '';
+		},
 		addTask(newTask) {
 			this.taskRepo.push(newTask);
 		},
@@ -60,20 +80,25 @@ export default {
 			let chosenTask = this.taskRepo.find((t) => t.title === taskTitle);
 			let currentStatus = chosenTask.isDone;
 			chosenTask.isDone = !currentStatus;
-		}
+		},
 	},
 };
 </script>
 
 <style scoped>
-.list-view-container {
-	height:100vh;
-	width:60%;
+.tasklist-view {
+	height: 100vh;
 }
-.fixed-list-view {
-	height: 90vh;
+.left-side {
+	background-color: #f0f8ff;
 }
-.fixed-input-view {
-	width:100%;
+
+.right-side {
+	flex: 4;
+}
+.tasklist-container {
+	height: 87vh;
+	margin: auto;
+	overflow-y: auto;
 }
 </style>

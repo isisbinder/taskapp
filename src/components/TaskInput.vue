@@ -1,7 +1,7 @@
 <template>
 	<div class="input-group">
 		<span class="input-group-text bg-dark text-white border-0">
-			<span class="bi" :class="getIconClass" />
+			<span class="bi" :class="getIconClass" style="font-size:2em"/>
 		</span>
 		<input
 			type="text"
@@ -9,7 +9,7 @@
 			required
 			maxlength="100"
 			size="70"
-			class="form-control bg-dark text-white border-0"
+			class="form-control-lg bg-dark text-white border-0 px-2 col-lg-9 col-md-9"
 			@focus="changeFocus"
 			@blur="changeFocus"
 			@keypress.enter="preAddTask"
@@ -46,7 +46,10 @@ export default {
 </script>
 
 <style scoped>
-.form-control:focus {
+.form-control-lg:focus {
 	box-shadow: none;
+}
+.form-control-lg:focus-visible{
+	outline: none;
 }
 </style>
