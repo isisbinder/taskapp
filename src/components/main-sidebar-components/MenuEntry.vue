@@ -1,7 +1,7 @@
 <template>
-	<a href="#">
-    <span class="bi entry-icon" :class="icon">{{ title }} [contagem]</span>
-  </a>
+  <span class="bi entry-icon" :class="icon">
+    {{ title }} [contagem]
+  </span>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
       type: String,
       default: 'bi-list'
     }
-  }
+  },
 }
 </script>
 

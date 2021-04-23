@@ -3,12 +3,11 @@
 		<li class="list-group-item">
 			<task-done-button
 				:isDone="task.isDone"
-				@click.left="toggleDoneFlag(task.title)"
-			/>
+				@click.left="toggleDoneFlag(task.id)"/>
 			<span :class="getTextClasses">{{ task.title }}</span>
 			<task-important-button
 				:isImportant="task.isImportant"
-				@click.left="toggleImportantFlag(task.title)"
+				@click.left="toggleImportantFlag(task.id)"
 			/>
 		</li>
 	</div>
@@ -17,6 +16,16 @@
 <script>
 import TaskDoneButton from "./TaskDoneButton.vue";
 import TaskImportantButton from "./TaskImportantButton.vue";
+
+function sorterTaskArray(a, b) {
+	if (a["isImportant"] && b["isImportant"]) {
+		return 0;
+	} else if (a["isImportant"] && !b["isImportant"]) {
+		return -1;
+	}
+	return 1;
+}
+
 export default {
 	components: {
 		TaskDoneButton,
@@ -28,10 +37,23 @@ export default {
 			type: Object,
 		},
 	},
-	inject: ["toggleImportantFlag", "toggleDoneFlag"],
+	inject: ['selectedList'],
 	computed: {
 		getTextClasses() {
 			return this.task.isDone? {'strike-text': true}: {};
+		}
+	}, 
+	methods: {
+		toggleImportantFlag(taskId) {
+			let chosenTask = this.selectedList.tasks.find((t) => t.id === taskId);
+			let currentStatus = chosenTask.isImportant;
+			chosenTask.isImportant = !currentStatus;
+			this.selectedList.tasks.sort(sorterTaskArray);
+		},
+		toggleDoneFlag(taskId) {
+			let chosenTask = this.selectedList.tasks.find((t) => t.id === taskId);
+			let currentStatus = chosenTask.isDone;
+			chosenTask.isDone = !currentStatus;
 		}
 	}
 };

@@ -8,8 +8,7 @@
 					data-bs-toggle="collapse"
 					data-bs-target="#doneTasksList"
 					aria-expanded="true"
-					aria-controls="doneTasksList"
-				>
+					aria-controls="doneTasksList">
 					<span class="done-text">Concluídas</span>
 					<span class="badge bg-primary done-count">{{ finishedTasksCount }}</span>
 				</button>
@@ -17,11 +16,9 @@
 			<div id="doneTasksList" class="accordion-collapse collapse pt-3" >
 				<ul class="list-group">
 					<task
-						v-for="currentTask in doneTasks"
-						:key="currentTask.title"
-						:task="currentTask"
-						title="Desmarcar"
-					></task>
+						v-for="currentTask in tasks"
+						:key="currentTask.id"
+						:task="currentTask"></task>
 				</ul>
 			</div>
 		</div>
@@ -29,21 +26,23 @@
 </template>
 
 <script>
-import Task from '../task/Task.vue';
+import Task from './task/Task.vue';
 export default {
 	components: {
 		Task,
 	},
-	inject: ['allTasks'],
+	inject: ['selectedList'],
+	props: {
+		tasks: {
+			required: true,
+		}
+	},
 	computed: {
-		doneTasks() {
-			return this.allTasks.filter(f => f.isDone === true);
-		},
 		finishedTasksCount() {
-			return this.doneTasks.length;
+			return this.tasks.length;
 		},
 		hasFinishedTasks() {
-			return this.doneTasks.length > 0;
+			return this.tasks.length > 0;
 		}
 	}
 };

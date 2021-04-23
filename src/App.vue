@@ -1,14 +1,14 @@
 <template>
-	<task-list-view></task-list-view>
+	<app-main-layout></app-main-layout>
 </template>
 
 <script>
-import TaskListView from "./components/TaskListView.vue";
+import AppMainLayout from "./components/layout/AppMainLayout.vue";
 
 export default {
 	name: "App",
 	components: {
-		TaskListView,
+		AppMainLayout,
 	},
 };
 </script>

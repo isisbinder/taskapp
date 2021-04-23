@@ -12,14 +12,14 @@
 			class="form-control-lg bg-dark text-white border-0 px-2 col-lg-9 col-md-9"
 			@focus="changeFocus"
 			@blur="changeFocus"
-			@keypress.enter="preAddTask"
+			@keypress.enter="addTask"
 		/>
 	</div>
 </template>
 
 <script>
 export default {
-	inject: ['addTask'],
+	inject: ['selectedList'],
 	data() {
 		return {
 			isInputFocused: false,
@@ -36,11 +36,12 @@ export default {
 		changeFocus() {
 			this.isInputFocused = !this.isInputFocused;
 		},
-		preAddTask(event) {
-			let newTask = { title: event.target.value, isImportant: false, isDone: false };
-			this.addTask(newTask);
-      event.target.value = '';
-		},
+		addTask(event) {
+			let newTaskId = ++this.selectedList.maxId;
+			let newTask = { id: newTaskId, title: event.target.value, isImportant: false, isDone: false };		
+			this.selectedList.tasks.push(newTask);
+			event.target.value = '';
+		}
 	},
 };
 </script>
