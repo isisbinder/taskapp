@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import MainSideBar from './mainmenu/MainSideBar.vue';
-import ListView from './listview/ListView.vue';
+import MainSideBar from "./mainmenu/MainSideBar.vue";
+import ListView from "./listview/ListView.vue";
 
 export default {
 	components: {
@@ -27,12 +27,9 @@ export default {
 	data() {
 		return {
 			taskListsRepo: [
-				{ taskListName: "Tarefas", 
-					maxId: 0, 
-					tasks: []
-				}
+				{ taskListName: "Tarefas", icon: "bi-house-door", maxId: 0, tasks: [] },
 			],
-			selectedListName: 'Tarefas',
+			selectedListName: "Tarefas",
 		};
 	},
 	computed: {
@@ -40,15 +37,17 @@ export default {
 			return this.taskListsRepo;
 		},
 		getSelectedList() {
-			return this.taskListsRepo.find((o) => o.taskListName === this.selectedListName);
-		}
+			return this.taskListsRepo.find(
+				(o) => o.taskListName === this.selectedListName
+			);
+		},
 	},
 	methods: {
 		createList(event) {
 			let name = event.target.value.trim();
-			let tasklistTemplate = { taskListName: '' || name, tasks: [] };
+			let tasklistTemplate = { taskListName: "" || name, tasks: [] };
 			this.taskListsRepo.push(tasklistTemplate);
-			event.target.value = '';
+			event.target.value = "";
 		},
 	},
 };

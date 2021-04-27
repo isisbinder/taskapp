@@ -7,8 +7,7 @@
 			<span :class="getTextClasses">{{ task.title }}</span>
 			<task-important-button
 				:isImportant="task.isImportant"
-				@click.left="toggleImportantFlag(task.id)"
-			/>
+				@click.left="toggleImportantFlag(task.id)"/>
 		</li>
 	</div>
 </template>

@@ -1,13 +1,7 @@
 <template>
-	<ul class="lists-menu">
-		<li :class="getSelectedClass('Tarefas')">
-			<menu-entry icon="bi-house-door" title="Tarefas"></menu-entry>
-		</li>
-		<li :class="getSelectedClass('Importante')">
-			<menu-entry icon="bi-star" title="Importante"></menu-entry>
-		</li>
-		<li v-for="list in nonDefaultLists" :key="list.taskListName" :class="getSelectedClass(list.taskListName)">
-			<menu-entry :title="list.taskListName"></menu-entry>
+	<ul class="lists-group">
+		<li v-for="list in allLists" :key="list.taskListName" class="list-group-item border-0" :class="getSelectedClasses(list.taskListName)">
+			<menu-entry :icon="list.icon" :title="list.taskListName" :tasksQty="getNumberOfTasks(list.tasks)"></menu-entry>
 		</li>
 		<li>
 			<input
@@ -29,22 +23,21 @@ export default {
 	components: {
 		MenuEntry,
 	},
-	inject: ["allLists"],
+	inject: ["allLists", "selectedList"],
 	data() {
 		return {
 			showListInput: false,
-			selectedList: 'Tarefas',
 		}
 	},
-	computed: {
-		nonDefaultLists() {
-			return this.allLists.filter((L) => L.taskListName != "Tarefas");
-		},
-	},
   methods: {
-		getSelectedClass(listName) {
-			return {'list--selected': this.selectedList === listName}
+		getSelectedClasses(listName) {
+			return {'active': this.selectedList.taskListName == listName, 
+			'bg-transparent': this.selectedList.taskListName != listName
+			}
 		},
+		getNumberOfTasks(tasksInList) {
+			return tasksInList == undefined? 0 : tasksInList.length;
+		},		
 		createList(event) {
 			let name = event.target.value.trim();
 			let tasklistTemplate = { taskListName: undefined || name, tasks: [] };
@@ -69,6 +62,7 @@ export default {
 .lists-menu > li {
 	line-height: 3em;
 	padding-left: 1.2em;
+	border-left: 4px solid transparent;
 }
 .lists-menu > li.list--selected {
 	background-color: rgba(55,228,185,0.2);
