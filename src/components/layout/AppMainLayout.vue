@@ -58,11 +58,13 @@ export default {
 	height: 100vh;
 }
 .left-side {
-	background-color: #f0f8ff;
+	flex: 0.8;
+	background-color: #fdfcfc;
 }
 
 .right-side {
 	flex: 4;
+	background-color: rgba(162,220,211,0.76)
 }
 .tasklist-container {
 	height: 87vh;

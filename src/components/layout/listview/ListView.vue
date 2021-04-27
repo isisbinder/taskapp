@@ -1,9 +1,10 @@
 <template>
 	<div class="tasklist-container col-lg-9 col-md-9">
+		<h1 class="mb-4"><span class="bi" :class="getTaskListIcon"></span>{{ getTaskListName }}</h1>
 		<open-tasks-list :tasks="getTasksByDoneStatus(false)"></open-tasks-list>
 		<done-tasks-list :tasks="getTasksByDoneStatus(true)"></done-tasks-list>
 	</div>
-	<task-input class="mt-4" style="place-content: center"></task-input>
+	<task-input class="mt-4 justify-content-center"></task-input>
 </template>
 
 <script>
@@ -18,8 +19,17 @@ export default {
 		TaskInput,
 	},
 	inject: ["selectedList"],
+	computed: {
+		getTaskListName() {
+			return this.selectedList.taskListName;
+		},
+		getTaskListIcon() {
+			return this.selectedList.icon;
+		}
+	},
 	methods: {
 		getTasksByDoneStatus(doneStatus) {
+			console.log(this.selectedList);
 			return this.selectedList.tasks.filter((o) => o.isDone === doneStatus);
 		},
 	},
@@ -31,5 +41,11 @@ export default {
 	height: 87vh;
 	margin: auto;
 	overflow-y: auto;
+}
+h1 {
+	color: #005d67;
+}
+h1 > span.bi {
+	margin-right: 0.3em
 }
 </style>

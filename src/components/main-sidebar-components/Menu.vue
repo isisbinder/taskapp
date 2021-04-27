@@ -64,10 +64,4 @@ export default {
 	padding-left: 1.2em;
 	border-left: 4px solid transparent;
 }
-.lists-menu > li.list--selected {
-	background-color: rgba(55,228,185,0.2);
-	color: #00867c;
-	font-weight: bold;
-	border-left: 4px solid #00867c;
-}
 </style>
