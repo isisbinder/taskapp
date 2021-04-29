@@ -29,7 +29,6 @@ export default {
 	},
 	methods: {
 		getTasksByDoneStatus(doneStatus) {
-			console.log(this.selectedList);
 			return this.selectedList.tasks.filter((o) => o.isDone === doneStatus);
 		},
 	},
