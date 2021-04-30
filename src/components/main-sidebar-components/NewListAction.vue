@@ -27,7 +27,7 @@ export default {
 			this.showListInput = !this.showListInput;
 		},
 		signalCreateList(event) {
-      let name = event.target.value.trim() || "Lista sem nome";
+      let name = event.target.value.trim();
       this.emitter.emit('create-list', name);
       event.target.value = "";
       this.showListInput = false;

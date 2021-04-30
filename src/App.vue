@@ -58,12 +58,7 @@ export default {
     getListMaxTaskId(listName) {
       return this.taskLists.find(L => L.name === listName).maxTaskId;
     },
-	},
-	mounted() {
-    this.emitter.on('change-list', (listName) => {
-      this.selectedList = listName;
-    }),
-		this.emitter.on("create-list", (listName) => {
+		buildDefaultListName() {
 			const regex = new RegExp("^" + this.defaultListName, "i");
 
 			const listasSemNome = this.taskLists.filter((L) => L.name.match(regex));
@@ -71,8 +66,18 @@ export default {
 			const qtdeListasSemNome =
 				Math.max(0, ...listasSemNome.flatMap((N) => N.name.match(/\d+/))) + 1;
 
+			return this.defaultListName + ' ' + qtdeListasSemNome;
+		}
+	},
+	mounted() {
+    this.emitter.on('change-list', (listName) => {
+      this.selectedList = listName;
+    }),
+		this.emitter.on("create-list", (listName) => {
+			const newListName = listName || this.buildDefaultListName();
+
 			const tasklistTemplate = {
-				name: listName + " " + qtdeListasSemNome,
+				name: newListName,
 				icon: "bi-list",
 				maxTaskId: 0,
 				tasks: [],
