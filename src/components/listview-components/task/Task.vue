@@ -5,7 +5,7 @@
 				:isDone="task.isDone"
 				@click.left="toggleDoneFlag(task.id)"/>
 			<span :class="getTextClasses">{{ task.title }}</span>
-			<task-important-button
+			<task-important-action
 				:isImportant="task.isImportant"
 				@click.left="toggleImportantFlag(task.id)"/>
 		</li>
@@ -14,7 +14,7 @@
 
 <script>
 import TaskDoneAction from "./TaskDoneAction.vue";
-import TaskImportantButton from "./TaskImportantButton.vue";
+import TaskImportantAction from "./TaskImportantAction.vue";
 
 function sorterTaskArray(a, b) {
 	if (a["isImportant"] && b["isImportant"]) {
@@ -28,7 +28,7 @@ function sorterTaskArray(a, b) {
 export default {
 	components: {
 		TaskDoneAction,
-		TaskImportantButton,
+		TaskImportantAction,
 	},
 	props: {
 		task: {
