@@ -18,30 +18,25 @@
 
 <script>
 export default {
-	inject: ["allLists", "importantTasksQty"],
+	inject: ['allLists', 'selectedListName'],
 	emits: ['change-list'],
-	data() {
-		return {
-			selectedList: "Tarefas",
-		};
-	},
 	methods: {
 		getSelectedListClasses(listName) {
 			return {
-				active: this.selectedList === listName,
-				"bg-transparent": this.selectedList != listName,
+				active: this.selectedListName.value === listName,
+				"bg-transparent": this.selectedListName.value != listName,
 			};
 		},
 		changeSelectedList(listName) {
-			this.selectedList = listName;
 			this.emitter.emit('change-list', listName);
 		},
 		getNumberOfTasks(listName) {
 			if (listName === "Importante") {
-				return this.importantTasksQty();
+				const allImportantTasks = this.allLists.filter(L => L.name != 'Importante').flatMap(o => o.tasks).filter(t => t.isImportant == true);
+				return allImportantTasks == undefined? 0 : allImportantTasks.length;
 			}
 			const list = this.allLists.find((L) => L.name === listName);
-			return list.tasks == undefined ? 0 : list.tasks.length;
+			return list.tasks == undefined? 0 : list.tasks.length;
 		},
 	},
 };

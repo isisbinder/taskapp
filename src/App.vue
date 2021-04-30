@@ -9,28 +9,29 @@
 			</div>
 		</div>
 		<div class="col pt-3 right-side">
-      <task-input class="mt-4 justify-content-center"></task-input>
+			<list-view></list-view>
 		</div>
 	</div>
 </template>
 
 <script>
+import { computed } from 'vue';
 import TaskListListing from "./components/main-sidebar-components/TaskListListing.vue";
 import NewListAction from "./components/main-sidebar-components/NewListAction.vue";
-import TaskInput from "./components/listview-components/TaskInput.vue";
+import ListView from "./components/listview-components/ListView.vue";
 
 export default {
 	name: "App",
 	components: {
 		TaskListListing,
 		NewListAction,
-    TaskInput,
+		ListView,
 	},
 	provide() {
 		return {
 			allLists: this.taskLists,
-			chosenList: this.selectedList,
-      importantTasksQty: this.getImportantTasksQty,
+			selectedList: computed(() => this.taskLists.find(L => L.name === this.selectedList)),
+			selectedListName: computed(() => this.selectedList),
 		};
 	},
 	data() {
@@ -54,16 +55,9 @@ export default {
 		};
 	},
 	methods: {
-    getTaskListIcon() {
-      return this.taskLists.find(L => L.name === this.selectedList).icon;
-    },
     getListMaxTaskId(listName) {
       return this.taskLists.find(L => L.name === listName).maxTaskId;
     },
-    getImportantTasksQty() {
-      const allImportantTasks = this.taskLists.filter(L => L.name != 'Importante').flatMap(o => o.tasks).filter(t => t.isImportant == true);
-      return allImportantTasks.length;
-    }
 	},
 	mounted() {
     this.emitter.on('change-list', (listName) => {
