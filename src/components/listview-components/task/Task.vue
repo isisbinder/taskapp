@@ -39,7 +39,7 @@ export default {
 	inject: ['selectedList'],
 	computed: {
 		getTextClasses() {
-			return this.task.isDone? {'strike-text': true}: {};
+			return {'strike-text': this.task.isDone};
 		}
 	}, 
 	methods: {
