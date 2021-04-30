@@ -44,13 +44,13 @@ export default {
 	}, 
 	methods: {
 		toggleImportantFlag(taskId) {
-			let chosenTask = this.selectedList.tasks.find((t) => t.id === taskId);
+			let chosenTask = this.selectedList.value.tasks.find((t) => t.id === taskId);
 			let currentStatus = chosenTask.isImportant;
 			chosenTask.isImportant = !currentStatus;
-			this.selectedList.tasks.sort(sorterTaskArray);
+			this.selectedList.value.tasks.sort(sorterTaskArray);
 		},
 		toggleDoneFlag(taskId) {
-			let chosenTask = this.selectedList.tasks.find((t) => t.id === taskId);
+			let chosenTask = this.selectedList.value.tasks.find((t) => t.id === taskId);
 			let currentStatus = chosenTask.isDone;
 			chosenTask.isDone = !currentStatus;
 		}
