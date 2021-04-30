@@ -2,24 +2,30 @@
   <h1 class="mb-4">
     <span class="bi" :class="getListIcon"/>{{ selectedList.value.name }}
   </h1>
-  <general-task-list-view></general-task-list-view>
+  <component :is="currentListViewType"></component>
   <task-input class="mt-4 justify-content-center"></task-input>
 </template>
 
 <script>
 import TaskInput from "./TaskInput.vue";
 import GeneralTaskListView from "./GeneralTaskListView.vue";
+import AggregateTaskListView from "./AggregateTaskListView.vue";
 
 export default {
   components: {
     TaskInput,
     GeneralTaskListView,
+    AggregateTaskListView,
   },
   inject: ['selectedList'],
   computed: {
     getListIcon() {
       return this.selectedList.value.icon;
-    }
+    },
+    currentListViewType() {
+      const isAggList = Object.prototype.hasOwnProperty.call(this.selectedList.value, 'taskAggFn');
+      return isAggList? 'AggregateTaskListView' : 'GeneralTaskListView';
+    },
   }
 }
 </script>

@@ -18,8 +18,13 @@
 
 <script>
 export default {
-	inject: ['allLists', 'selectedListName'],
+	inject: ['selectedListName', 'aggLists', 'nonAggLists'],
 	emits: ['change-list'],
+	computed: {
+		allLists() {
+			return Array.of(...this.aggLists, ...this.nonAggLists);
+		}
+	},
 	methods: {
 		getSelectedListClasses(listName) {
 			return {
@@ -31,11 +36,12 @@ export default {
 			this.emitter.emit('change-list', listName);
 		},
 		getNumberOfTasks(listName) {
-			if (listName === "Importante") {
-				const allImportantTasks = this.allLists.filter(L => L.name != 'Importante').flatMap(o => o.tasks).filter(t => t.isImportant == true);
-				return allImportantTasks == undefined? 0 : allImportantTasks.length;
+			const aggList = this.aggLists.find(L => L.name === listName);
+			if (aggList) {
+				const allAggTasks = this.nonAggLists.flatMap(o => o.tasks).filter(aggList.taskAggFn);
+				return allAggTasks == undefined? 0: allAggTasks.length;
 			}
-			const list = this.allLists.find((L) => L.name === listName);
+			const list = this.nonAggLists.find(L => L.name === listName);
 			return list.tasks == undefined? 0 : list.tasks.length;
 		},
 	},

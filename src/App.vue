@@ -38,8 +38,10 @@ export default {
 	},
 	provide() {
 		return {
-			allLists: this.taskLists,
-			selectedList: computed(() => this.taskLists.find(L => L.name === this.selectedList)),
+			//allLists: computed(() => Array.of(...this.aggregateLists, ...this.taskLists)),
+			nonAggLists: this.taskLists,
+			aggLists: this.aggregateLists,
+			selectedList: computed(() => Array.of(...this.taskLists, ...this.aggregateLists).find(L => L.name === this.selectedList)),
 			selectedListName: computed(() => this.selectedList),
 		};
 	},
@@ -52,12 +54,15 @@ export default {
 					maxTaskId: 0,
 					tasks: [],
 				},
-				{
+				/*{
 					name: "Importante",
 					icon: "bi-exclamation-octagon",
 					maxTaskId: undefined,
 					tasks: undefined,
-				},
+				},*/
+			],
+			aggregateLists: [
+				{ name: 'Importante', icon: 'bi-exclamation-octagon', taskAggFn: (T) => T.isImportant == true}
 			],
 			selectedList: "Tarefas",
 			defaultListName: "Lista sem nome",
