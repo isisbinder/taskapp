@@ -1,7 +1,7 @@
 <template>
 	<div class="input-group mb-3 rounded-3">
 		<li class="list-group-item">
-			<task-done-button
+			<task-done-action 
 				:isDone="task.isDone"
 				@click.left="toggleDoneFlag(task.id)"/>
 			<span :class="getTextClasses">{{ task.title }}</span>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TaskDoneButton from "./TaskDoneButton.vue";
+import TaskDoneAction from "./TaskDoneAction.vue";
 import TaskImportantButton from "./TaskImportantButton.vue";
 
 function sorterTaskArray(a, b) {
@@ -27,7 +27,7 @@ function sorterTaskArray(a, b) {
 
 export default {
 	components: {
-		TaskDoneButton,
+		TaskDoneAction,
 		TaskImportantButton,
 	},
 	props: {

@@ -1,5 +1,5 @@
 <template>
-  <h1>
+  <h1 class="mb-4">
     <span class="bi" :class="getListIcon"/>{{ selectedList.value.name }}
   </h1>
   <general-task-list-view></general-task-list-view>
@@ -23,3 +23,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+h1 {
+	color: #005d67;
+}
+span.bi {
+	margin-right: 0.3em
+}
+</style>

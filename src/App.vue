@@ -8,7 +8,7 @@
 				<new-list-action></new-list-action>
 			</div>
 		</div>
-		<div class="col pt-3 right-side">
+		<div class="col py-4 px-5 right-side">
 			<list-view></list-view>
 		</div>
 	</div>
@@ -116,11 +116,5 @@ export default {
 	height: 87vh;
 	margin: auto;
 	overflow-y: auto;
-}
-.tasklist-container h1 {
-	color: #005d67;
-}
-.tasklist-container h1 > span.bi {
-	margin-right: 0.3em
 }
 </style>
