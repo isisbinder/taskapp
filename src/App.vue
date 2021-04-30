@@ -20,6 +20,15 @@ import TaskListListing from "./components/main-sidebar-components/TaskListListin
 import NewListAction from "./components/main-sidebar-components/NewListAction.vue";
 import ListView from "./components/listview-components/ListView.vue";
 
+function sorterTaskArray(a, b) {
+	if (a["isImportant"] && b["isImportant"]) {
+		return 0;
+	} else if (a["isImportant"] && !b["isImportant"]) {
+		return -1;
+	}
+	return 1;
+}
+
 export default {
 	name: "App",
 	components: {
@@ -96,6 +105,9 @@ export default {
       targetList.tasks.push(taskObject);
       targetList.maxTaskId = taskId;
     });
+		this.emitter.on('sort-selected-list', () => {
+			this.taskLists.find(L => L.name === this.selectedList).tasks.sort(sorterTaskArray);
+		})
 	},
 };
 </script>

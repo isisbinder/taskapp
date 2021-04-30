@@ -16,15 +16,6 @@
 import TaskDoneAction from "./TaskDoneAction.vue";
 import TaskImportantAction from "./TaskImportantAction.vue";
 
-function sorterTaskArray(a, b) {
-	if (a["isImportant"] && b["isImportant"]) {
-		return 0;
-	} else if (a["isImportant"] && !b["isImportant"]) {
-		return -1;
-	}
-	return 1;
-}
-
 export default {
 	components: {
 		TaskDoneAction,
@@ -47,7 +38,7 @@ export default {
 			let chosenTask = this.selectedList.value.tasks.find((t) => t.id === taskId);
 			let currentStatus = chosenTask.isImportant;
 			chosenTask.isImportant = !currentStatus;
-			this.selectedList.value.tasks.sort(sorterTaskArray);
+			this.emitter.emit('sort-selected-list');
 		},
 		toggleDoneFlag(taskId) {
 			let chosenTask = this.selectedList.value.tasks.find((t) => t.id === taskId);
