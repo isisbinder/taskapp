@@ -1,7 +1,7 @@
 <template>
 	<div class="input-group">
 		<span class="input-group-text bg-dark text-white border-0">
-			<span class="bi" :class="toggleIconClass" style="font-size:2em"/>
+			<span class="bi" :class="toggleIconClass"/>
 		</span>
 		<input
 			type="text"
@@ -9,10 +9,10 @@
 			required
 			maxlength="100"
 			size="70"
-			class="form-control-lg bg-dark text-white border-0 px-2 col-lg-9 col-md-9"
+			class="form-control-lg bg-dark text-white border-0 px-2"
 			@focus="changeFocus"
 			@blur="changeFocus"
-			@keypress.enter="addTask"
+			@keypress.enter="addTask" 
 		/>
 	</div>
 </template>
@@ -38,8 +38,10 @@ export default {
 		},
 		addTask(event) {
 			const taskTitle = event.target.value.trim();
-			this.emitter.emit('add-new-task', taskTitle);
-			event.target.value = '';
+			if (taskTitle != '') {
+				this.emitter.emit('add-new-task', taskTitle);
+				event.target.value = '';
+			}
 		}
 	},
 };
@@ -51,5 +53,14 @@ export default {
 }
 .form-control-lg:focus-visible{
 	outline: none;
+}
+.input-group-text {
+	flex:0.1;
+}
+.bi {
+	font-size: 2em;
+}
+.form-control-lg {
+	flex:5;
 }
 </style>

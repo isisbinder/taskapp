@@ -1,6 +1,6 @@
 <template>
 	<span
-		class="input-group-text bi task-action action-important"
+		class="input-group-text bi task-action action-important py-0"
 		:class="getActionClasses"
 		title="Marcar como importante"
 	></span>
@@ -25,6 +25,6 @@ export default {
 
 <style scoped>
 .action-important {
-	float: right;
+	flex: 0 0 3%
 }
 </style>

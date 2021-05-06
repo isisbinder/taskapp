@@ -1,6 +1,6 @@
 <template>
 	<span
-		class="input-group-text bi task-action action-done fw-bold"
+		class="input-group-text bi task-action action-done fw-bold py-0"
 		:class="getActionClasses" 
 		@mouseover="changeHoverStatus"
 		@mouseout="changeHoverStatus"
@@ -40,10 +40,7 @@ export default {
 
 <style scoped>
 .action-done {
-	float: left;
 	font-size: 1.5em;
-	padding-top: 0;
-	padding-bottom: 0;
-	padding-left: 0;
+	flex: 0 0 3%
 }
 </style>

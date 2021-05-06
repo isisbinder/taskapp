@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="list-unstyled">
     <task v-for="task in openTasks" :key="task.id" :task="task"></task>
   </ul>
 
@@ -8,7 +8,7 @@
 			<h2 class="accordion-header">
 				<button
 					type="button"
-					class="accordion-button bg-dark text-white"
+					class="accordion-button text-white"
 					data-bs-toggle="collapse"
 					data-bs-target="#doneTasksList"
 					aria-expanded="true"
@@ -53,8 +53,8 @@ export default {
 </script>
 
 <style scoped>
-.accordion-button::after {
-	color: white;
+.accordion-button {
+	background-color: rgba(0,0,0,0.6);
 }
 .done-text {
 	flex:1;

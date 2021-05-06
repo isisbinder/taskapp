@@ -1,5 +1,5 @@
 <template>
-	<ul class="lists-group">
+	<ul class="list-group list-unstyled">
 		<li
 			v-for="list in allLists"
 			:key="list.name"
@@ -60,5 +60,6 @@ export default {
 }
 .list-group-item {
 	cursor: pointer;
+	border-radius: 0
 }
 </style>

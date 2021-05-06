@@ -3,7 +3,7 @@
     <span class="bi" :class="getListIcon"/>{{ selectedList.value.name }}
   </h1>
   <component :is="currentListViewType"></component>
-  <task-input class="mt-4 justify-content-center"></task-input>
+  <task-input class="mt-4 justify-content-center" v-show="!isAggList"></task-input>
 </template>
 
 <script>
@@ -23,9 +23,11 @@ export default {
       return this.selectedList.value.icon;
     },
     currentListViewType() {
-      const isAggList = Object.prototype.hasOwnProperty.call(this.selectedList.value, 'taskAggFn');
-      return isAggList? 'AggregateTaskListView' : 'GeneralTaskListView';
+      return this.isAggList? 'AggregateTaskListView' : 'GeneralTaskListView';
     },
+    isAggList() {
+      return Object.prototype.hasOwnProperty.call(this.selectedList.value, 'taskAggFn');
+    }
   }
 }
 </script>

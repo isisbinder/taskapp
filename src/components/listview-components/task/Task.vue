@@ -1,13 +1,24 @@
 <template>
 	<div class="input-group mb-3 rounded-3">
-		<li class="list-group-item">
-			<task-done-action 
-				:isDone="task.isDone"
-				@click.left="toggleDoneFlag(task.id)"/>
-			<span :class="getTextClasses">{{ task.title }}</span>
-			<task-important-action
-				:isImportant="task.isImportant"
-				@click.left="toggleImportantFlag(task.id)"/>
+		<li class="list-group-item py-3">
+			<div class="container-fluid m-0 p-0">
+				<div class="row">
+					<task-done-action
+						class="col"
+						:isDone="task.isDone"
+						@click.left="toggleDoneFlag(task.id)"
+					/>
+					<div class="col m-0 p-0">
+						<p :class="getTextClasses" class="m-0">{{ task.title }}</p>
+						<slot name="taskListName"></slot>
+					</div>
+					<task-important-action
+						class="col"
+						:isImportant="task.isImportant"
+						@click.left="toggleImportantFlag(task.id)"
+					/>
+				</div>
+			</div>
 		</li>
 	</div>
 </template>
@@ -27,25 +38,29 @@ export default {
 			type: Object,
 		},
 	},
-	inject: ['selectedList'],
+	inject: ["selectedList"],
 	computed: {
 		getTextClasses() {
-			return {'strike-text': this.task.isDone};
-		}
-	}, 
+			return { "strike-text": this.task.isDone };
+		},
+	},
 	methods: {
 		toggleImportantFlag(taskId) {
-			let chosenTask = this.selectedList.value.tasks.find((t) => t.id === taskId);
+			let chosenTask = this.selectedList.value.tasks.find(
+				(t) => t.id === taskId
+			);
 			let currentStatus = chosenTask.isImportant;
 			chosenTask.isImportant = !currentStatus;
-			this.emitter.emit('sort-selected-list');
+			this.emitter.emit("sort-selected-list");
 		},
 		toggleDoneFlag(taskId) {
-			let chosenTask = this.selectedList.value.tasks.find((t) => t.id === taskId);
+			let chosenTask = this.selectedList.value.tasks.find(
+				(t) => t.id === taskId
+			);
 			let currentStatus = chosenTask.isDone;
 			chosenTask.isDone = !currentStatus;
-		}
-	}
+		},
+	},
 };
 </script>
 
@@ -55,7 +70,7 @@ export default {
 }
 .list-group-item {
 	width: inherit;
-	padding: 1em;
+	/*padding: 1em;*/
 }
 .list-group-item:hover {
 	background-color: rgb(240, 240, 240);
