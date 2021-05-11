@@ -17,7 +17,7 @@ export default {
 		getActionClasses() {
 			const defaultImportantIcon = { "bi-star": true };
 			const checkedImportantIcon = { "bi-star-fill": true };
-			return this.$props.isImportant ? checkedImportantIcon : defaultImportantIcon;
+			return this.$props.isImportant? checkedImportantIcon : defaultImportantIcon;
 		},
 		getActionTitle() {
 			return this.$props.isImportant? "Desmarcar" : "Marcar como importante";

@@ -2,6 +2,7 @@
 	<span
 		class="input-group-text bi task-action action-done fw-bold py-0"
 		:class="getActionClasses" 
+		:title="getActionTitle"
 		@mouseover="changeHoverStatus"
 		@mouseout="changeHoverStatus"
 	/>
@@ -29,6 +30,9 @@ export default {
 			}
 			return checkedDoneIcon;
 		},
+		getActionTitle() {
+			return this.$props.isDone? "Desmarcar" : "Marcar como concluída";
+		}
 	},
 	methods: {
 		changeHoverStatus() {
