@@ -1,6 +1,6 @@
 <template>
   <ul class="list-unstyled">
-    <task v-for="task in openTasks" :key="task.id" :task="task"></task>
+    <task v-for="task in openTasks" :key="task.id" :task="task" :listName="selectedList.value.name"></task>
   </ul>
 
   <div class="accordion" v-show="finishedTasksCount > 0">
@@ -22,7 +22,8 @@
 					<task
 						v-for="task in finishedTasks"
 						:key="task.id"
-						:task="task"></task>
+						:task="task" 
+						:listName="selectedList.value.name"></task>
 				</ul>
 			</div>
 		</div>

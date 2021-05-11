@@ -15,7 +15,7 @@
 					<task-important-action
 						class="col"
 						:isImportant="task.isImportant"
-						@click.left="toggleImportantFlag(task.id)"
+						@click.left="toggleImportantFlag(task.id, listName)"
 					/>
 				</div>
 			</div>
@@ -37,21 +37,29 @@ export default {
 			required: true,
 			type: Object,
 		},
+		listName: {
+			required: true,
+			type: String,
+		}
 	},
 	inject: ["selectedList"],
+	emits: ["sort-selected-list", "toggle-important-at-list"],
 	computed: {
 		getTextClasses() {
 			return { "strike-text": this.task.isDone };
 		},
 	},
 	methods: {
-		toggleImportantFlag(taskId) {
+		toggleImportantGeneralList(taskId) {
 			let chosenTask = this.selectedList.value.tasks.find(
 				(t) => t.id === taskId
 			);
 			let currentStatus = chosenTask.isImportant;
 			chosenTask.isImportant = !currentStatus;
 			this.emitter.emit("sort-selected-list");
+		},
+		toggleImportantFlag(taskId) {
+			this.emitter.emit("toggle-important-at-list", {id: taskId, listName: this.$props.listName});
 		},
 		toggleDoneFlag(taskId) {
 			let chosenTask = this.selectedList.value.tasks.find(
@@ -70,7 +78,6 @@ export default {
 }
 .list-group-item {
 	width: inherit;
-	/*padding: 1em;*/
 }
 .list-group-item:hover {
 	background-color: rgb(240, 240, 240);

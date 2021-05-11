@@ -81,7 +81,10 @@ export default {
 				Math.max(0, ...listasSemNome.flatMap((N) => N.name.match(/\d+/))) + 1;
 
 			return this.defaultListName + ' ' + qtdeListasSemNome;
-		}
+		},
+		findListByName(listName) {
+			return Array.of(...this.taskLists, ...this.aggregateLists).find(L => L.name === listName);
+		},
 	},
 	mounted() {
     this.emitter.on('change-list', (listName) => {
@@ -100,18 +103,23 @@ export default {
 			this.taskLists.push(tasklistTemplate);
 		}),
     this.emitter.on("add-new-task", (taskTitle) => {
-      // Quando a lista selecionada for 'Importante', adicionar na tarefas, mas marcar como importante
-			const listName = this.selectedList === 'Importante'? 'Tarefas' : this.selectedList;
-      const targetList = this.taskLists.find(L => L.name === listName);
-
-      const taskId = this.getListMaxTaskId(listName) + 1;
-      const isImportantTask = this.selectedList === 'Importante';
-      const taskObject = {id: taskId, title: taskTitle, isDone: false, isImportant: isImportantTask};
-      targetList.tasks.push(taskObject);
-      targetList.maxTaskId = taskId;
-    });
+			let targetList = this.findListByName(this.selectedList);
+			const taskId = targetList.maxTaskId + 1;
+			const newTask = {id: taskId, title: taskTitle, isDone: false, isImportant: false};
+			targetList.tasks.push(newTask);
+			targetList.maxTaskId = taskId;
+    }),
 		this.emitter.on('sort-selected-list', () => {
 			this.taskLists.find(L => L.name === this.selectedList).tasks.sort(sorterTaskArray);
+		}),
+		this.emitter.on("sort-list", (listName) => {
+			this.taskLists.find(L => L.name === listName).tasks.sort(sorterTaskArray);
+		}),
+		this.emitter.on("toggle-important-at-list", (targetObject) => {
+			const targetList = this.findListByName(targetObject.listName);//this.taskLists.find(L => L.name === targetObject.listName);
+			const task = targetList.tasks.find(T => T.id === targetObject.id);
+			task.isImportant = !task.isImportant;
+			this.emitter.emit("sort-list", targetList.name);
 		})
 	},
 };
