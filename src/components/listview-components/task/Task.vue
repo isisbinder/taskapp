@@ -43,21 +43,13 @@ export default {
 		}
 	},
 	inject: ["selectedList"],
-	emits: ["sort-selected-list", "toggle-important-at-list"],
+	emits: ["toggle-important-at-list"],
 	computed: {
 		getTextClasses() {
 			return { "strike-text": this.task.isDone };
 		},
 	},
 	methods: {
-		toggleImportantGeneralList(taskId) {
-			let chosenTask = this.selectedList.value.tasks.find(
-				(t) => t.id === taskId
-			);
-			let currentStatus = chosenTask.isImportant;
-			chosenTask.isImportant = !currentStatus;
-			this.emitter.emit("sort-selected-list");
-		},
 		toggleImportantFlag(taskId) {
 			this.emitter.emit("toggle-important-at-list", {id: taskId, listName: this.$props.listName});
 		},

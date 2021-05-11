@@ -38,10 +38,9 @@ export default {
 	},
 	provide() {
 		return {
-			//allLists: computed(() => Array.of(...this.aggregateLists, ...this.taskLists)),
 			nonAggLists: this.taskLists,
 			aggLists: this.aggregateLists,
-			selectedList: computed(() => Array.of(...this.taskLists, ...this.aggregateLists).find(L => L.name === this.selectedList)),
+			selectedList: computed(() => this.findListByName(this.selectedList)),
 			selectedListName: computed(() => this.selectedList),
 		};
 	},
@@ -53,13 +52,7 @@ export default {
 					icon: "bi-house-door",
 					maxTaskId: 0,
 					tasks: [],
-				},
-				/*{
-					name: "Importante",
-					icon: "bi-exclamation-octagon",
-					maxTaskId: undefined,
-					tasks: undefined,
-				},*/
+				}
 			],
 			aggregateLists: [
 				{ name: 'Importante', icon: 'bi-exclamation-octagon', taskAggFn: (T) => T.isImportant == true}
@@ -109,14 +102,11 @@ export default {
 			targetList.tasks.push(newTask);
 			targetList.maxTaskId = taskId;
     }),
-		this.emitter.on('sort-selected-list', () => {
-			this.taskLists.find(L => L.name === this.selectedList).tasks.sort(sorterTaskArray);
-		}),
 		this.emitter.on("sort-list", (listName) => {
 			this.taskLists.find(L => L.name === listName).tasks.sort(sorterTaskArray);
 		}),
 		this.emitter.on("toggle-important-at-list", (targetObject) => {
-			const targetList = this.findListByName(targetObject.listName);//this.taskLists.find(L => L.name === targetObject.listName);
+			const targetList = this.findListByName(targetObject.listName);
 			const task = targetList.tasks.find(T => T.id === targetObject.id);
 			task.isImportant = !task.isImportant;
 			this.emitter.emit("sort-list", targetList.name);
