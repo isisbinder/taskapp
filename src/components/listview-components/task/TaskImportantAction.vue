@@ -2,7 +2,7 @@
 	<span
 		class="input-group-text bi task-action action-important py-0"
 		:class="getActionClasses"
-		title="Marcar como importante"
+		:title="getActionTitle"
 	></span>
 </template>
 <script>
@@ -19,6 +19,9 @@ export default {
 			const checkedImportantIcon = { "bi-star-fill": true };
 			return this.$props.isImportant ? checkedImportantIcon : defaultImportantIcon;
 		},
+		getActionTitle() {
+			return this.$props.isImportant? "Desmarcar" : "Marcar como importante";
+		}
 	},
 };
 </script>
