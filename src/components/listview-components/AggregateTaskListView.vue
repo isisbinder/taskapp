@@ -57,26 +57,26 @@ export default {
 	components: {
 		Task,
 	},
-	computed: {
-		openTasks() {
+  methods: {
+    baseTaskFilter(filterFn) {
       const tmpList = [];
       for (let list of this.nonAggLists) {
-        var tmpTasks = list.tasks.filter(T => this.selectedList.value.taskAggFn(T) && T.isDone == false);
+        var tmpTasks = list.tasks.filter(T => filterFn(T));
         if (tmpTasks.length > 0) {
           tmpList.push({taskList: list.name, tasks: tmpTasks});
         }
       }
 			return tmpList;
-		},
+    }
+  },
+	computed: {
+    openTasks() {
+      const filterFn = (T) => this.selectedList.value.taskAggFn(T) && T.isDone == false;
+      return this.baseTaskFilter(filterFn);
+    },
 		finishedTasks() {
-      const tmpList = [];
-      for (let list of this.nonAggLists) {
-        var tmpTasks = list.tasks.filter(T => this.selectedList.value.taskAggFn(T) && T.isDone == true);
-        if (tmpTasks.length > 0) {
-          tmpList.push({taskList: list.name, tasks: tmpTasks});
-        }
-      }
-      return tmpList;
+      const filterFn = (T) => this.selectedList.value.taskAggFn(T) && T.isDone == true;
+      return this.baseTaskFilter(filterFn);
 		},
     finishedTasksCount() {
       return this.finishedTasks.length;
