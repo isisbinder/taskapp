@@ -4,8 +4,7 @@
 		:class="getActionClasses" 
 		:title="getActionTitle"
 		@mouseover="changeHoverStatus"
-		@mouseout="changeHoverStatus"
-	/>
+		@mouseout="changeHoverStatus"/>
 </template>
 
 <script>

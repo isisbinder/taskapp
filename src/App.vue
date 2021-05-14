@@ -110,6 +110,11 @@ export default {
 			const task = targetList.tasks.find(T => T.id === targetObject.id);
 			task.isImportant = !task.isImportant;
 			this.emitter.emit("sort-list", targetList.name);
+		}),
+		this.emitter.on("toggle-done-at-list", (targetObject) => {
+			const targetList = this.findListByName(targetObject.listName);
+			const task = targetList.tasks.find(T => T.id === targetObject.id);
+			task.isDone = !task.isDone;
 		})
 	},
 };

@@ -15,7 +15,7 @@
 					<task-important-action
 						class="col"
 						:isImportant="task.isImportant"
-						@click.left="toggleImportantFlag(task.id, listName)"
+						@click.left="toggleImportantFlag(task.id)"
 					/>
 				</div>
 			</div>
@@ -43,7 +43,7 @@ export default {
 		}
 	},
 	inject: ["selectedList"],
-	emits: ["toggle-important-at-list"],
+	emits: ["toggle-important-at-list", "toggle-done-at-list"],
 	computed: {
 		getTextClasses() {
 			return { "strike-text": this.task.isDone };
@@ -54,12 +54,8 @@ export default {
 			this.emitter.emit("toggle-important-at-list", {id: taskId, listName: this.$props.listName});
 		},
 		toggleDoneFlag(taskId) {
-			let chosenTask = this.selectedList.value.tasks.find(
-				(t) => t.id === taskId
-			);
-			let currentStatus = chosenTask.isDone;
-			chosenTask.isDone = !currentStatus;
-		},
+			this.emitter.emit("toggle-done-at-list", {id: taskId, listName: this.$props.listName});
+		}
 	},
 };
 </script>
